@@ -1,8 +1,7 @@
 package mt;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 
 /**
@@ -15,6 +14,79 @@ public class Application {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
 
+
+/*      ***************************************  FileReadingMultithreading  ********************************************
+        testingFileReadingViaExecutor();
+*/
+
+/*      ***************************************  NavigableMap  *********************************************************
+        navigableMapMethodsPractise();
+*/
+
+
+    }
+
+    private static void navigableMapMethodsPractise() {
+        NavigableMap<String,String> navigableMap = new TreeMap<>();
+        navigableMap.put("1","suraj");
+        navigableMap.put("2","surajs");
+        navigableMap.put("3","surajsr");
+        navigableMap.put("4","surajsra");
+        navigableMap.put("5","surajsrs");
+        navigableMap.put("6","surajsrss");
+
+        System.out.println("DescendingKeySet Map");
+        NavigableSet<String> descendingKeySet = navigableMap.descendingKeySet();
+        descendingKeySet.forEach( (x)-> {
+            System.out.println("keys : "+x);
+        });
+
+        System.out.println("Descending Map");
+        SortedMap<String,String> descendingMap = navigableMap.descendingMap();
+        descendingMap.forEach( (x,y)-> {
+            System.out.println(x + " : "+ y);
+        });
+
+
+        System.out.println("Head Map");
+        SortedMap<String,String> headMap = navigableMap.headMap("5",true);
+        headMap.forEach( (x,y)-> {
+            System.out.println(x + " : "+ y);
+        });
+
+        System.out.println("Tail Map");
+        SortedMap<String,String> tailMap = navigableMap.tailMap("5",true);
+        tailMap.forEach( (x,y)-> {
+            System.out.println(x + " : "+ y);
+        });
+
+        System.out.println("Sub Map");
+        SortedMap<String,String> subMap = navigableMap.subMap("2",true,"5",true);
+        subMap.forEach( (x,y)-> {
+            System.out.println(x + " : "+ y);
+        });
+
+        Map.Entry<String,String> ceilingEntry = navigableMap.ceilingEntry("2");
+        Map.Entry<String,String> floorEntry = navigableMap.floorEntry("2");
+        Map.Entry<String,String> higherEntry = navigableMap.higherEntry("2");
+        Map.Entry<String,String> lowerEntry = navigableMap.lowerEntry("2");
+
+        System.out.println("ceiling, floor, higherEntry, lowerEntry");
+        System.out.println(ceilingEntry.getKey()+" : "+ ceilingEntry.getValue());
+        System.out.println(floorEntry.getKey()+" : "+ floorEntry.getValue());
+        System.out.println(higherEntry.getKey()+" : "+ higherEntry.getValue());
+        System.out.println(lowerEntry.getKey()+" : "+ lowerEntry.getValue());
+
+        System.out.println("Poll first Entry");
+        Map.Entry<String,String> pollFirstEntry = navigableMap.pollFirstEntry();
+        System.out.println("first entry : "+ pollFirstEntry.getValue());
+
+        System.out.println("Poll Last Entry");
+        Map.Entry<String,String> pollLastEntry = navigableMap.pollLastEntry();
+        System.out.println("Last entry : "+ pollLastEntry.getValue());
+    }
+
+    private static void testingFileReadingViaExecutor() throws InterruptedException, ExecutionException {
         long start = System.currentTimeMillis();
         List<Callable<List<String>>> list = new ArrayList<>();
         List<String> resultList = new ArrayList<>();
@@ -40,10 +112,6 @@ public class Application {
         System.out.println("Time taken for mt is : " + (end- start)/1000 );
 
         shutdown(executorService);
-
-
-
-
     }
 
     private static void shutdown(ExecutorService executorService) {
