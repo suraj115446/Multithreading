@@ -23,67 +23,175 @@ public class Application {
         navigableMapMethodsPractise();
 */
 
+/*      ***************************************  ScheduledExecutorService  *********************************************
+        schedluedExecutorServicePractise();
+*/
+
+/*      **********************************  Study Signal w/o wait notify ***********************************************
+        signallingWOwaitNotify();
+
+*/
+
+        //Lock lock = new ReentrantLock();
+
+        collectionPractice();
+
+        enumAndEnumSetPractice();
+
 
     }
 
+    private static void enumAndEnumSetPractice() {
+        System.out.println(Colors.RED);
+        System.out.println(Colors.RED);
+
+        Set<Colors> enumSet= EnumSet.allOf(Colors.class);
+
+        System.out.println(Colors.VIOLET.ordinal());
+        System.out.println(Colors.VIOLET.name());
+
+        for(Colors colors : enumSet){
+            System.out.println(colors.name()+" (Details- " +"Red: "+colors.getR()+" green: "+colors.getG()+" blue: "+ colors.getB()+")");
+        }
+
+        for (int val : Colors.RED.mixColors(Colors.BLUE,Colors.GREEN)){
+            System.out.println("Red: "+" Green: "+ " Blue: ");
+            System.out.println(val);
+        }
+    }
+
+    private static void collectionPractice() {
+        Map<String,String> map = new HashMap<>();
+        List<String> list = new ArrayList<>();
+        list.add("suraj");
+        list.add("sandeep");
+
+        //System.out.println(list.remove("sandeep"));
+        //list.forEach(x -> System.out.println(x));
+
+        //list.addAll(list.size(), list);
+        //list.forEach(x -> System.out.println(x));
+        Iterator<String> iterator =list.iterator();
+
+        while(iterator.hasNext()){
+            System.out.println(iterator.next());
+            iterator.remove();
+        }
+
+        System.out.println(list.size());
+
+        list.forEach(x -> System.out.println(x));
+    }
+
+    private static void signallingWOwaitNotify() {
+        Signal signal = new Signal();
+        Runnable taskToStudySignal1 = new TaskToStudySignal(signal);
+
+        Thread thread1 =  new Thread(taskToStudySignal1);
+        Thread thread2 = new Thread(taskToStudySignal1);
+        Thread thread3 = new Thread(taskToStudySignal1);
+        Thread thread4 = new Thread(taskToStudySignal1);
+        Thread thread5 = new Thread(taskToStudySignal1);
+        Thread thread6 = new Thread(taskToStudySignal1);
+
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        thread4.start();
+        thread5.start();
+        thread6.start();
+    }
+
+    private static void schedluedExecutorServicePractise() {
+        System.out.println("start");
+        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(5);
+
+//    ****************************  schedule  *************************************************************************
+        scheduledExecutorService.schedule(new Runnable() {
+             @Override
+             public void run() {
+                 System.out.println("Executed!");
+
+             }
+         }, 5,  TimeUnit.SECONDS);
+
+        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+             @Override
+             public void run() {
+                 System.out.println("schedule with Fixed Rate");
+                 System.out.println("Executed!");
+
+             }
+         }, 2, 2, TimeUnit.SECONDS);
+
+        scheduledExecutorService.scheduleWithFixedDelay(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("schedule with Fixed Delay");
+                System.out.println("Executed!");
+
+            }
+        }, 2, 5, TimeUnit.SECONDS);
+    }
+
     private static void navigableMapMethodsPractise() {
-        NavigableMap<String,String> navigableMap = new TreeMap<>();
-        navigableMap.put("1","suraj");
-        navigableMap.put("2","surajs");
-        navigableMap.put("3","surajsr");
-        navigableMap.put("4","surajsra");
-        navigableMap.put("5","surajsrs");
-        navigableMap.put("6","surajsrss");
+        NavigableMap<String, String> navigableMap = new TreeMap<>();
+        navigableMap.put("1", "suraj");
+        navigableMap.put("2", "surajs");
+        navigableMap.put("3", "surajsr");
+        navigableMap.put("4", "surajsra");
+        navigableMap.put("5", "surajsrs");
+        navigableMap.put("6", "surajsrss");
 
         System.out.println("DescendingKeySet Map");
         NavigableSet<String> descendingKeySet = navigableMap.descendingKeySet();
-        descendingKeySet.forEach( (x)-> {
-            System.out.println("keys : "+x);
+        descendingKeySet.forEach((x) -> {
+            System.out.println("keys : " + x);
         });
 
         System.out.println("Descending Map");
-        SortedMap<String,String> descendingMap = navigableMap.descendingMap();
-        descendingMap.forEach( (x,y)-> {
-            System.out.println(x + " : "+ y);
+        SortedMap<String, String> descendingMap = navigableMap.descendingMap();
+        descendingMap.forEach((x, y) -> {
+            System.out.println(x + " : " + y);
         });
 
 
         System.out.println("Head Map");
-        SortedMap<String,String> headMap = navigableMap.headMap("5",true);
-        headMap.forEach( (x,y)-> {
-            System.out.println(x + " : "+ y);
+        SortedMap<String, String> headMap = navigableMap.headMap("5", true);
+        headMap.forEach((x, y) -> {
+            System.out.println(x + " : " + y);
         });
 
         System.out.println("Tail Map");
-        SortedMap<String,String> tailMap = navigableMap.tailMap("5",true);
-        tailMap.forEach( (x,y)-> {
-            System.out.println(x + " : "+ y);
+        SortedMap<String, String> tailMap = navigableMap.tailMap("5", true);
+        tailMap.forEach((x, y) -> {
+            System.out.println(x + " : " + y);
         });
 
         System.out.println("Sub Map");
-        SortedMap<String,String> subMap = navigableMap.subMap("2",true,"5",true);
-        subMap.forEach( (x,y)-> {
-            System.out.println(x + " : "+ y);
+        SortedMap<String, String> subMap = navigableMap.subMap("2", true, "5", true);
+        subMap.forEach((x, y) -> {
+            System.out.println(x + " : " + y);
         });
 
-        Map.Entry<String,String> ceilingEntry = navigableMap.ceilingEntry("2");
-        Map.Entry<String,String> floorEntry = navigableMap.floorEntry("2");
-        Map.Entry<String,String> higherEntry = navigableMap.higherEntry("2");
-        Map.Entry<String,String> lowerEntry = navigableMap.lowerEntry("2");
+        Map.Entry<String, String> ceilingEntry = navigableMap.ceilingEntry("2");
+        Map.Entry<String, String> floorEntry = navigableMap.floorEntry("2");
+        Map.Entry<String, String> higherEntry = navigableMap.higherEntry("2");
+        Map.Entry<String, String> lowerEntry = navigableMap.lowerEntry("2");
 
         System.out.println("ceiling, floor, higherEntry, lowerEntry");
-        System.out.println(ceilingEntry.getKey()+" : "+ ceilingEntry.getValue());
-        System.out.println(floorEntry.getKey()+" : "+ floorEntry.getValue());
-        System.out.println(higherEntry.getKey()+" : "+ higherEntry.getValue());
-        System.out.println(lowerEntry.getKey()+" : "+ lowerEntry.getValue());
+        System.out.println(ceilingEntry.getKey() + " : " + ceilingEntry.getValue());
+        System.out.println(floorEntry.getKey() + " : " + floorEntry.getValue());
+        System.out.println(higherEntry.getKey() + " : " + higherEntry.getValue());
+        System.out.println(lowerEntry.getKey() + " : " + lowerEntry.getValue());
 
         System.out.println("Poll first Entry");
-        Map.Entry<String,String> pollFirstEntry = navigableMap.pollFirstEntry();
-        System.out.println("first entry : "+ pollFirstEntry.getValue());
+        Map.Entry<String, String> pollFirstEntry = navigableMap.pollFirstEntry();
+        System.out.println("first entry : " + pollFirstEntry.getValue());
 
         System.out.println("Poll Last Entry");
-        Map.Entry<String,String> pollLastEntry = navigableMap.pollLastEntry();
-        System.out.println("Last entry : "+ pollLastEntry.getValue());
+        Map.Entry<String, String> pollLastEntry = navigableMap.pollLastEntry();
+        System.out.println("Last entry : " + pollLastEntry.getValue());
     }
 
     private static void testingFileReadingViaExecutor() throws InterruptedException, ExecutionException {
@@ -109,7 +217,7 @@ public class Application {
         printResults(resultList);
         long end = System.currentTimeMillis();
 
-        System.out.println("Time taken for mt is : " + (end- start)/1000 );
+        System.out.println("Time taken for mt is : " + (end - start) / 1000);
 
         shutdown(executorService);
     }
@@ -119,11 +227,10 @@ public class Application {
     }
 
     private static void printResults(List<String> resultList) {
-        System.out.println("Smallest price for sneaker is : "+ resultList.stream().max( (x,y) -> {
-            if(Integer.parseInt(x) > Integer.parseInt(y)){
+        System.out.println("Smallest price for sneaker is : " + resultList.stream().max((x, y) -> {
+            if (Integer.parseInt(x) > Integer.parseInt(y)) {
                 return 1;
-            }
-            else
+            } else
                 return -1;
         }).get());
     }
@@ -146,19 +253,18 @@ public class Application {
     }
 
     private static void createBatchForTask(List<Callable<List<String>>> list, List<File> files, int diff, String itemName) {
-        for (int i = 0; i < files.size(); i+=diff) {
-            int fromIndex = i ;
-            int toIndex = i+ diff - 1;
+        for (int i = 0; i < files.size(); i += diff) {
+            int fromIndex = i;
+            int toIndex = i + diff - 1;
             List<File> listofFile = new ArrayList<>();
 
-            if( files.size()>= fromIndex && files.size() > toIndex) {
+            if (files.size() >= fromIndex && files.size() > toIndex) {
                 listofFile.addAll(files.subList(fromIndex, toIndex));
-            }
-            else if( files.size()>= fromIndex){
+            } else if (files.size() >= fromIndex) {
                 listofFile.addAll(files.subList(fromIndex, files.size()));
             }
-                Task task = new Task(listofFile, itemName);
-                list.add(task);
+            Task task = new Task(listofFile, itemName);
+            list.add(task);
 
         }
     }
