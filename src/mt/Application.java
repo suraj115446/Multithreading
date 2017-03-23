@@ -1,6 +1,12 @@
 package mt;
 
+import mt.NitroBooster.Employee;
+import mt.NitroBooster.NitroBooster;
+import mt.NitroBooster.Rectangle;
+import mt.NitroBooster.Shape;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -12,7 +18,7 @@ public class Application {
     private static List<File> fileList = new ArrayList<File>();
     private static String itemName;
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException, FileNotFoundException {
 
 
 /*      ***************************************  FileReadingMultithreading  ********************************************
@@ -34,16 +40,81 @@ public class Application {
 
         //Lock lock = new ReentrantLock();
 
+/*      *********************************  Collections Practice  ********************************************************
         collectionPractice();
+*/
+
+        System.out.println("Tree Set");
+        Set<String> treeSet = new TreeSet<>();
+        treeSet.add("asd");
+        treeSet.add("qee");
+        treeSet.add("azxcccccccccccc");
+        treeSet.forEach(z -> System.out.println(z));
+
+        System.out.println("Hash Set");
+        Set<String> hashSet = new HashSet<>();
+        hashSet.add("asd");
+        hashSet.add("qee");
+        hashSet.add("azxcccccccccccc");
+        hashSet.forEach(z -> System.out.println(z));
+
+        System.out.println("Linked Hash Set");
+        Set<String> linkedHashSet = new LinkedHashSet<>();
+        linkedHashSet.add("asd");
+        linkedHashSet.add("qee");
+        linkedHashSet.add("azxcccccccccccc");
+        linkedHashSet.forEach(z -> System.out.println(z));
+
 
         enumAndEnumSetPractice();
 
+        PersonService ps1 = MyInstance.INSTANCE.getPersonServiceInstance();
+        PersonService ps2 = MyInstance.INSTANCE.getPersonServiceInstance();
 
+        PersonService ps3 = new PersonService();
+
+        if (ps1.equals(ps2)) {
+            System.out.println("Equal");
+        } else if (!ps1.equals(ps3)) {
+            System.out.println("Not Equal");
+        }
+
+        Date date = new Date();
+        NitroBooster lamborghini = new Lamborghini();
+        lamborghini.defaultBooster();
+
+        lamborghini.nitroBoost();
+        System.out.println("NitroBoost : "+NitroBooster.BOOSTPOWER);
+
+        Shape shape = new Rectangle();
+        Employee employee1 = new Employee(1,"Suraj","AL1");
+        Employee employee2 = new Employee(2,"Shivanshu","AL2");
+
+
+        List<Employee> list = new LinkedList<>();
+        list.add(employee1);
+        list.add(employee2);
+
+        //Collections.sort(list);
+        list.forEach(x-> System.out.println(x.getEmpName()));
+        Collections.sort(list, new Comparator<Employee>() {
+            @Override
+            public int compare(Employee o1, Employee o2) {
+                return o1.getEmpName().compareTo(o2.getEmpName());
+            }
+
+            @Override
+            public Comparator<Employee> reversed() {
+                return this.reversed();
+            }
+        });
+
+        list.forEach(x-> System.out.println(x.getEmpName()));
     }
 
     private static void enumAndEnumSetPractice() {
         System.out.println(Colors.RED);
-        System.out.println(Colors.RED);
+        /*System.out.println(Colors.RED);
 
         Set<Colors> enumSet= EnumSet.allOf(Colors.class);
 
@@ -57,11 +128,11 @@ public class Application {
         for (int val : Colors.RED.mixColors(Colors.BLUE,Colors.GREEN)){
             System.out.println("Red: "+" Green: "+ " Blue: ");
             System.out.println(val);
-        }
+        }*/
     }
 
     private static void collectionPractice() {
-        Map<String,String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         List<String> list = new ArrayList<>();
         list.add("suraj");
         list.add("sandeep");
@@ -71,9 +142,9 @@ public class Application {
 
         //list.addAll(list.size(), list);
         //list.forEach(x -> System.out.println(x));
-        Iterator<String> iterator =list.iterator();
+        Iterator<String> iterator = list.iterator();
 
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             System.out.println(iterator.next());
             iterator.remove();
         }
@@ -87,7 +158,7 @@ public class Application {
         Signal signal = new Signal();
         Runnable taskToStudySignal1 = new TaskToStudySignal(signal);
 
-        Thread thread1 =  new Thread(taskToStudySignal1);
+        Thread thread1 = new Thread(taskToStudySignal1);
         Thread thread2 = new Thread(taskToStudySignal1);
         Thread thread3 = new Thread(taskToStudySignal1);
         Thread thread4 = new Thread(taskToStudySignal1);
@@ -108,21 +179,21 @@ public class Application {
 
 //    ****************************  schedule  *************************************************************************
         scheduledExecutorService.schedule(new Runnable() {
-             @Override
-             public void run() {
-                 System.out.println("Executed!");
+            @Override
+            public void run() {
+                System.out.println("Executed!");
 
-             }
-         }, 5,  TimeUnit.SECONDS);
+            }
+        }, 5, TimeUnit.SECONDS);
 
         scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-             @Override
-             public void run() {
-                 System.out.println("schedule with Fixed Rate");
-                 System.out.println("Executed!");
+            @Override
+            public void run() {
+                System.out.println("schedule with Fixed Rate");
+                System.out.println("Executed!");
 
-             }
-         }, 2, 2, TimeUnit.SECONDS);
+            }
+        }, 2, 2, TimeUnit.SECONDS);
 
         scheduledExecutorService.scheduleWithFixedDelay(new Runnable() {
             @Override
